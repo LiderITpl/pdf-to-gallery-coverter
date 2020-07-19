@@ -26,11 +26,20 @@
       $images = [];
       
       try {
-        $resultingPages = PdfSplit::splitPages($filePath, __DIR__ . '/output');
-        foreach($resultingPages as $pagePath) {
-          $newFileName = __DIR__ . '/output' . '/' . self::getFileNameFromPath($filePath) . '.png';
-          PdfConvert::toImage($pagePath, $newFileName, 'png');
-          array_push($images, $newFileName);
+        $endDirectory = __DIR__ . DIRECTORY_SEPARATOR  . 'output';
+        $outputPath = self::generateOutputPath($endDirectory);
+        
+        $resultingPages = PdfSplit::splitPages($filePath, $outputPath);
+        
+        for($i=1; $i<=sizeof($resultingPages); $i++) {
+          $pdfPath = $resultingPages[$i - 1];
+          $newImagePath = $outputPath . DIRECTORY_SEPARATOR . 'page-' . $i . '.png';
+          
+          PdfConvert::toImage($pdfPath, $newImagePath, 'png');
+  
+          //unlink($pdfPath);
+          
+          array_push($images, $newImagePath);
         }
       } catch(Exception $e) {
         throw new ConvertPdfFileException($e);
@@ -38,11 +47,18 @@
       
       return $images;
     }
+  
+    private static function generateOutputPath($endDirectory = false) {
+      $endDirectory = $endDirectory ? $endDirectory : '.' . DIRECTORY_SEPARATOR;
+      $outputPath = null;
     
-    private static function getFileNameFromPath(string $filePath) {
-      $filePathLevels = explode(DIRECTORY_SEPARATOR, $filePath);
-      $fileName = $filePathLevels[sizeof($filePathLevels) - 1];
-      return str_replace('.pdf', '', $fileName);
+      do {
+        $outputPath = $endDirectory . DIRECTORY_SEPARATOR . uniqid();
+      } while(is_dir($outputPath));
+    
+      mkdir($outputPath, 0777, true);
+    
+      return $outputPath;
     }
   
   }

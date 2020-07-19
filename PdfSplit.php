@@ -8,33 +8,34 @@
   
     /**
      * @param string $filePath
-     * @param bool $endDirectory
+     * @param string $outputPath
      * @return array
      * @throws Exception
      */
-    public static function splitPages(string $filePath, $endDirectory = false) {
-      $endDirectory = $endDirectory ? $endDirectory : './';
-      $filePathLevels = explode(DIRECTORY_SEPARATOR, $filePath);
-      $fileName = $filePathLevels[sizeof($filePathLevels) - 1];
-      $noExtensionFileName = str_replace('.pdf', '', $fileName);
-      $outputPath = $endDirectory . '/' . $noExtensionFileName;
+    public static function splitPages(string $filePath, string $outputPath) {
       $resultingPages = [];
   
-      if (!is_dir($outputPath))
-        mkdir($outputPath, 0777, true);
-  
       $pdf = new FPDI();
-      $pagecount = $pdf->setSourceFile($filePath); // How many pages?
+      $pagesCount = $pdf->setSourceFile($filePath); // How many pages?
+  
+      $fpId = $pdf->importPage(1);
+      $fpDimensions = $pdf->getImportedPageSize($fpId);
   
       // Split each page into a new PDF
-      for ($i = 1; $i <= $pagecount; $i++) {
-        $new_pdf = new FPDI();
-        $new_pdf->AddPage();
-        $new_pdf->setSourceFile($filePath);
-        $new_pdf->useTemplate($new_pdf->importPage($i));
+      for ($i = 1; $i <= $pagesCount; $i++) {
+        $newPdf = new FPDI(
+            $fpDimensions['orientation'], 'mm',
+            [ $fpDimensions['width'], $fpDimensions['height'] ]
+        );
+        
+        $newPdf->setSourceFile($filePath);
+        $importedPageId = $newPdf->importPage($i);
+        
+        $newPdf->AddPage();
+        $newPdf->useTemplate($importedPageId);
   
-        $newFilename = $outputPath . '/' . 'page-' . $i . '.pdf';
-        $new_pdf->Output($newFilename, "F");
+        $newFilename = $outputPath . DIRECTORY_SEPARATOR . 'page-' . $i . '.pdf';
+        $newPdf->Output($newFilename, "F");
         array_push($resultingPages, $newFilename);
       }
   

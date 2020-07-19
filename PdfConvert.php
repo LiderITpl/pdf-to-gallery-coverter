@@ -1,6 +1,7 @@
 <?php
   namespace PdfToGallery;
   
+  use Imagick;
   use Spatie\PdfToImage\Exceptions\InvalidFormat;
   use Spatie\PdfToImage\Exceptions\PdfDoesNotExist;
   use Spatie\PdfToImage\Pdf;
@@ -17,6 +18,7 @@
     public static function toImage(string $pathToPdf, string $outputDir, string $ext = 'jpeg') {
       $pdf = new Pdf($pathToPdf);
       $pdf->setOutputFormat($ext);
+      $pdf->setColorspace(Imagick::COLORSPACE_SRGB);
       $pdf->saveImage($outputDir);
     }
     

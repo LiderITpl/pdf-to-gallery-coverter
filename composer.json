@@ -2,7 +2,7 @@
     "name": "liderit/pdf-to-gallery-converter",
     "version": "1.0.0",
     "description": "#PHP7",
-    "type": "project",
+    "type": "library",
     "authors": [
         {
             "name": "Arek N",
