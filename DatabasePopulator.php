@@ -10,12 +10,14 @@
   
     /**
      * @param array $file
+     * @param string $outputPath
      * @return int
-     * @throws MySqlQueryException
      * @throws ModelValidationException
+     * @throws MySqlQueryException
      */
-    public static function insertFile(array $file) {
+    public static function insertFile(array $file, string $outputPath) {
       $pdfFile = new PdfFile($file);
+      $pdfFile->output = $outputPath;
       $pdfFile->save();
       return $pdfFile->id;
     }

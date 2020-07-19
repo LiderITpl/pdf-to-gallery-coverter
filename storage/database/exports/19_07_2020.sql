@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 19 Lip 2020, 16:28
+-- Czas generowania: 19 Lip 2020, 17:01
 -- Wersja serwera: 10.4.11-MariaDB
 -- Wersja PHP: 7.4.3
 
@@ -42,6 +42,7 @@ CREATE TABLE `img_files` (
 
 CREATE TABLE `pdf_files` (
   `id` int(8) NOT NULL,
+  `output` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
   `size` int(11) NOT NULL,
   `insert_time` timestamp NOT NULL DEFAULT current_timestamp()

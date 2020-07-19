@@ -46,7 +46,7 @@
         $outputPath = self::generateOutputPath($endDirectory);
   
         // INSERT FILE TO DB
-        $pdfFileId = DatabasePopulator::insertFile($file);
+        $pdfFileId = DatabasePopulator::insertFile($file, $outputPath);
         
         // SPLIT PDF
         $resultingPages = PdfSplit::splitPages($filePath, $outputPath);
