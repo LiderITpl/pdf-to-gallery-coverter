@@ -2,7 +2,7 @@
 
 ### 1. Instalujemy paczke przez composera:
 ```text
-composer require liderit/pdf-to-gallery-converter "^1.0.1"
+composer require liderit/pdf-to-gallery-converter "^1.0.2"
 ```
 
 ### 2. Pobieramy plik

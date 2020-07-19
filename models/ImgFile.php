@@ -4,7 +4,6 @@
   use PdfToGallery\Bootstrap\MySQL\MySqlQueryException;
   use PdfToGallery\Exceptions\ModelValidationException;
   use function PdfToGallery\Bootstrap\MySQL\getMysql;
-  use function PdfToGallery\Bootstrap\Utils\dump;
 
   class ImgFile extends ModelBase {
     

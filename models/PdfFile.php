@@ -23,7 +23,7 @@
       $attrs = $this->validateAttrs();
       $sql = <<<EOD
         INSERT INTO pdf_files (name, output, size, insert_time)
-        VALUES ('{$attrs['name']}', '{$attrs['output']}', ''{$attrs['size']}', FROM_UNIXTIME({$attrs['insert_time']}))
+        VALUES ('{$attrs['name']}', '{$attrs['output']}', '{$attrs['size']}', FROM_UNIXTIME({$attrs['insert_time']}))
 EOD;
       $this->id = getMysql()->insert($sql);
     }
