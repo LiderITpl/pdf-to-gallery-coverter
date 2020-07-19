@@ -11,6 +11,7 @@
     ],
     "require": {
         "php": "^7.2.5",
+        "ext-mysqli": "*",
         "ext-fileinfo": "*",
         "ext-imagick": "*",
         "setasign/fpdf": "1.8.*",
@@ -29,6 +30,7 @@
             "PdfToGallery\\Models\\": "models"
         },
         "files": [
+            "bootstrap/MySQL/getMysql.php",
             "bootstrap/Utils/dump.php"
         ]
     }
