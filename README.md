@@ -7,7 +7,7 @@
 > https://pdf-to-gallery-coverter.liderit.online/
 
 ## Paczka na Packagist.org
-> -
+> https://packagist.org/packages/liderit/pdf-to-gallery-converter
 
 ---
 
